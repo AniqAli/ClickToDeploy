@@ -18,7 +18,19 @@
   border-radius: 5px;
 }
 
-.form input {
+.deploy-form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 450px;
+  /* margin: 0 auto 100px; */
+  padding: 15px;
+  /* text-align: center; */
+}
+
+.settings-col1 input,
+.form input,
+.deploy-form input {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -262,23 +274,219 @@ label #sidebar_btn:hover {
   width: 100%;
 } */
 
-.dashboard-content {
+.dashboard-body {
+  padding-top: 70px;
+  padding-left: 270px;
+}
+
+.dash-cont {
+  padding-top: 15px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.dash-header {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 6px 0px;
+  padding: 3px 20px;
+}
+
+.dash-cards-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* justify-content: space-between; */
+  gap: 2rem;
+  padding-top: 2rem;
+}
+
+.dash-card {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: #e6e6e62f;
+  border: 0.5px solid #3a4753;
+}
+
+.card-body {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.card-inner-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body p {
+  margin: 0;
+  padding: 16px 0;
+}
+
+.card-body p:first-child {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.depl-cont,
+.sett-cont {
+  display: none;
+}
+
+.deploy-header,
+.settings-header {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 6px 0px;
+  padding: 3px 20px;
+  /* padding-top: 15px; */
+  width: 92%;
+  margin: 0 auto;
+}
+
+.deploy-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10rem;
+  padding-top: 4rem;
+  width: 98%;
+  margin: 0 auto;
+}
+
+.deploy-anim {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.deploy-col1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.deploy-col1 button {
+  border: none;
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  margin-top: 1.5rem;
+}
+
+.deploy-col1 button:hover,
+.settings-col2 button:hover {
+  background-color: #0d6dfdc5;
+}
+
+.settings-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-top: 2rem;
+  width: 96%;
+  margin: 0 auto;
+}
+
+.settings-col1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 5px;
+}
+
+.settings-col2,
+.settings-col3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.settings-col1 input,
+.settings-col2 input,
+.settings-col3 input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border: 1px solid #0189a12c;
+}
+
+/* .settings-col2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+} */
+
+.settings-col1 p,
+.settings-col2 p,
+.settings-col3 p {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 7px 0;
+}
+
+.updateProfBtn {
+  border: none;
+  background-color: #0d6efd;
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  margin-top: 4rem;
+  display: block;
+  margin-left: auto;
+  margin-right: 1.2rem;
+}
+
+.updateProfBtn:hover {
+  background-color: #0d6dfdc5;
+}
+
+.settings-col2 button {
+  border: none;
+  background-color: #0d6efd;
+  color: #fff;
+  width: 200px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.5s;
+}
+
+.settings-col2 img {
+  width: 100%;
+  max-width: 190px;
+}
+
+/* .dashboard-content {
   width: (100% - 250px);
   margin-top: 60px;
   padding: 20px;
   margin-left: 250px;
-  /* background: url(background.png) no-repeat;
+  background: url(background.png) no-repeat;
   background-position: center;
-  background-size: cover; */
+  background-size: cover;
   height: 100vh;
   transition: 0.5s;
 }
 
 .deploy-content,
-.dashboard-content,
 .settings-content {
   display: none;
-}
+} */
 
 /* #check:checked~.content {
   margin-left: 60px;

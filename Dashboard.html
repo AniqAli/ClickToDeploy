@@ -41,36 +41,126 @@
       <img src="https://i.imgur.com/iQpdHb2.jpg" class="profile_image" alt="">
       <h4>Williamson</h4>
     </div> -->
-    <a href="#"><span>Dashboard</span></a>
-    <a href="#" class="deploy-btn" onclick="clickFunc()"><span>Deploy</span></a>
-    <a href="#"><span>Settings</span></a>
+    <a href="#" onclick="showDashboardBox()"><span>Dashboard</span></a>
+    <a href="#" onclick="showDeployBox()"><span>Deploy</span></a>
+    <a href="#" onclick="showSettingBox()"><span>Settings</span></a>
   </div>
   <!--sidebar end-->
 
-  <div class="dash-cont">
-    <p>
-      dashboard
-    </p>
-  </div>
-  <div class="depl-cont">
-    <p>
-      deploy
-    </p>
-  </div>
-  <div class="sett-cont">
-    <p>
-      setting
-    </p>
+  <div class="dashboard-body">
+    <!-- dashboard content -->
+    <div class="dash-cont" id="dash-cont">
+      <div class="dash-header">
+        <h3>
+          Dashboard
+        </h3>
+      </div>
+      <div class="dash-cards-row">
+        <div class="dash-card">
+          <div class="card-body">
+            <div class="card-inner-box">
+              <p>20</p>
+              <img src="./assets/img/web-deploy-icon.png" alt=""
+                style="width: 100%; max-width: 40px; height: 100%; max-height: 40px; margin-top: -3px;">
+            </div>
+            <p>Websites Deployed</p>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="card-body">
+            <div class="card-inner-box">
+              <p>18</p>
+              <img src="./assets/img/active-users-icon.png" alt=""
+                style="width: 100%; max-width: 40px; height: 100%; max-height: 40px; margin-top: -3px;">
+            </div>
+            <p>Active Users</p>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="card-body">
+            <div class="card-inner-box">
+              <p>25</p>
+              <img src="./assets/img/world-clients-icon.png" alt=""
+                style="width: 100%; max-width: 40px; height: 100%; max-height: 40px; margin-top: -3px;">
+            </div>
+            <p>World Wide Clients</p>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="card-body">
+            <div class="card-inner-box">
+              <p>20</p>
+              <img src="./assets/img/total-deploys-icons.png" alt=""
+                style="width: 100%; max-width: 40px; height: 100%; max-height: 40px; margin-top: -3px;">
+            </div>
+            <p>Total Deploys</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- deploy content -->
+    <div class="depl-cont" id="depl-cont">
+      <div class="deploy-header">
+        <h3>
+          Deploy
+        </h3>
+      </div>
+      <div class="deploy-row">
+        <div class="deploy-col1">
+          <div class="deploy-form">
+            <form class="register-form">
+              <input type="text" placeholder="Repository URL" required />
+              <input type="text" placeholder="Website Name" required />
+              <input type="text" placeholder="Workspace" required />
+              <input type="text" placeholder="Exposed Port" required />
+              <button>
+                Click To Deploy
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="deploy-col2">
+          <img src="./assets/img/deploy-anim.gif" alt="deploy" class="deploy-anim">
+        </div>
+      </div>
+    </div>
+    <!-- settings content -->
+    <div class="sett-cont" id="sett-cont">
+      <div class="settings-header">
+        <h3>
+          Change Settings
+        </h3>
+      </div>
+      <div class="settings-row">
+        <div class="settings-col1">
+          <p>Name:</p>
+          <input type="text" placeholder="Name" value="Ali Khan" />
+        </div>
+        <div class="settings-col2">
+          <p>Password:</p>
+          <input type="password" placeholder="Password" value="qwerty123" />
+        </div>
+        <div class="settings-col3">
+          <p>Email:</p>
+          <input type="email" placeholder="Email Address" value="Alikhan@gmail.com" />
+        </div>
+        <!-- <div class="settings-col2">
+          <img src="./assets/img/about.jpg" alt="profile image">
+          <button>Change Profile Picture</button>
+        </div> -->
+      </div>
+      <button class="updateProfBtn">Update Profile</button>
+    </div>
   </div>
 
   <!-- Dashboard content -->
-  <div class="dashboard-content">
+  <!-- <div class="dashboard-content">
     <div class="card">
       <p>
         Dashboard
       </p>
     </div>
-  </div>
+  </div> -->
 
   <!-- Deploy content -->
   <div class="deploy-content">
@@ -115,6 +205,7 @@
     // });
   </script> -->
 
+  <script src="./assets/js/main.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script src="./script.js"></script>
 </body>
