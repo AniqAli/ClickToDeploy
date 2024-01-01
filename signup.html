@@ -6,6 +6,160 @@
   <title>Example</title>
   <link rel="stylesheet" href="./assets/css/signinSignupStyle.css">
 
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script>
+    // getData();
+
+    // async function getData() {
+    //   // const response = await fetch('http://52.139.169.174:4000')
+    //   const response = await fetch('http://52.139.169.174:4000/api/create', {
+    //     method: 'POST',
+    //     Headers: {
+    //       Accept: 'application.json',
+    //       'Content-Type': 'application/json'
+    //     },
+    //     // Body: body,
+    //   })
+    //   console.log("res=>", response);
+    //   const data = await response.json();
+    //   console.log("data=>", data);
+    // length = data.drinks.length;
+    // console.log(data);
+    // var temp = "";
+    // for (i = 0; i < length; i++) {
+    //   temp += "<tr>";
+    //   temp += "<td>" + data.drinks[i].strDrink + "</td>";
+    //   temp += "<td>" + data.drinks[i].strInstructions + "</td>";
+    // }
+    // document.getElementById("data").innerHTML = temp;
+    // }
+    // function createNewProfile(profile) {
+    //   const formData = new FormData();
+    //   formData.append('first_name', profile.firstName);
+    //   formData.append('last_name', profile.lastName);
+    //   formData.append('email', profile.email);
+
+    //   return fetch('http://52.139.169.174:4000/api/create', {
+    //     method: 'POST',
+    //     body: formData
+    //   }).then(response => response.json())
+    //   console.log(response)
+    // }
+
+    // createNewProfile(profile)
+    //   .then((json) => {
+    //     // handle success
+    //   })
+    //   .catch(error => error);
+
+    // function auth() {
+    // e.preventDefault();
+    // console.log('clicked');
+    // var name = document.getElementById("name").value;
+    // var email = document.getElementById("email").value;
+    // var password = document.getElementById("password").value;
+
+    // if (name === "" || email === "" || password === "") {
+    //   alert('fill all fields');
+    // }
+
+    // window.location = 'https://www.google.com';
+    // }
+    // logMovies()
+
+    // async function logMovies() {
+    //   const response = await fetch("http://52.139.169.174:4000/api/user");
+    //   const movies = await response.json();
+    //   console.log(movies);
+    // }
+
+    // $("#signupForm").submit(function (e) {
+    //   e.preventDefault();
+    // });
+
+
+    // function saveData() {
+    //   var username = document.getElementById('name').value;
+    //   localStorage.setItem("username", JSON.stringify(username))
+    //   var useremail = document.getElementById('email').value;
+    //   localStorage.setItem("useremail", JSON.stringify(useremail))
+    //   var userpassword = document.getElementById('password').value;
+    //   localStorage.setItem("userpassword", JSON.stringify(userpassword))
+
+    //   if (username === getusername || userpassword === getuserpassword || useremail === getuseremail) {
+    //     alert("User already exist. Please go to signin page")
+    //   }
+    //   // window.location = "./Dashboard.html"
+    // }
+
+
+    // getting user
+    var userToken = localStorage.getItem("userToken");
+    console.log("user token", userToken);
+
+    if (userToken) {
+      alert("User already registered. Please register with new credentials!")
+      // window.location.assign("./signup.html")
+    }
+    else {
+      // alert("signup success")
+      function signUpForm(e) {
+        e.preventDefault();
+        console.log("e =>", e.target.children);
+
+        var name = e.target.children[0].value;
+        var password = e.target.children[1].value;
+        var email = e.target.children[2].value;
+
+        var signUpForm = document.getElementById("signupForm");
+        // var formData = new FormData(signUpForm);
+
+
+        fetch("http://52.139.169.174:4000/api/user/register", {
+          method: "POST",
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            // "Authentication": "Bearer {token}"
+          }
+        })
+          .then(res => {
+            console.log("response", res);
+            // console.log("data", res.data);
+            // console.log("body", res.body);
+            if (res.statusText === "OK") {
+              console.log("success");
+              const inputs = document.querySelectorAll('#name, #password, #email');
+              inputs.forEach(input => {
+                input.value = '';
+              });
+
+              // window.location.assign("./Dashboard.html")
+              // console.log(window.location.assign("http://52.139.169.174/Dashboard.html"));
+            }
+            else if (res.statusText === "Bad Request") {
+              alert("User Already Registered!")
+            }
+            else {
+              alert("Something went wrong. Check logs for more details!")
+            }
+            return res.json()
+            // var data = []
+          })
+          .then(data => {
+            console.log("data 151", data.data.tokens.accessToken);
+            var userToken = data.data.tokens.accessToken;
+            window.location.assign("./Dashboard.html?" + userToken)
+            localStorage.setItem("userToken", userToken)
+          })
+          .catch(err => console.log("error", err))
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -13,12 +167,12 @@
   <div class="login-page">
     <div class="form">
       <img src="./assets/img/login-img-converted.png" alt="" style="width: 100%; max-width: 100px;">
-      <form class="register-form">
-        <input type="text" placeholder="Name" />
-        <input type="password" placeholder="Password" />
-        <input type="email" placeholder="Email Address" />
-        <!-- <input type="date" placeholder="Date of Birth" /> -->
-        <a href="#">create</a>
+      <form class="register-form" id="signupForm" onsubmit="signUpForm(event)">
+        <input type="text" placeholder="Name" name="name" id="name" required />
+        <input type="password" placeholder="Password" name="password" id="password" required />
+        <input type="email" placeholder="Email Address" name="email" id="email" required />
+        <!-- <a href="#">create</a> -->
+        <button type="submit" class="signupBtn">Sign Up</button>
         <p class="message">Already registered? <a href="./signin.html">Sign In</a></p>
       </form>
       <!-- <form class="login-form">
@@ -30,7 +184,8 @@
     </div>
   </div>
   <!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script> -->
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
   <script src="./script.js"></script>
 
 </body>

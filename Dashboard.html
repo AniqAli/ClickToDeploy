@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Example</title>
   <link rel="stylesheet" href="./assets/css/signinSignupStyle.css">
+
 </head>
 
 <body style="background-color: #fff !important;">
@@ -19,7 +20,8 @@
       <h3>Click To<span> Deploy</span></h3>
     </div>
     <div class="right_area">
-      <a href="./signin.html" class="logout_btn">Logout</a>
+      <!-- <a href="./signin.html" class="logout_btn">Logout</a> -->
+      <button type="submit" class="logout_btn" onclick="logoutFunc()">Logout</button>
     </div>
   </header>
   <!--header area end-->
@@ -48,6 +50,15 @@
   <!--sidebar end-->
 
   <div class="dashboard-body">
+    <!-- <div class="loading-main">
+      <div class="loading-box">
+        <img src="./assets/img/loading-anim.gif" alt="deploy">
+        <h5>
+          Deploying... Please Wait!
+        </h5>
+      </div>
+    </div> -->
+
     <!-- dashboard content -->
     <div class="dash-cont" id="dash-cont">
       <div class="dash-header">
@@ -100,6 +111,10 @@
     </div>
     <!-- deploy content -->
     <div class="depl-cont" id="depl-cont">
+      <!-- <div class="loader-main">
+        <div class="spin"></div>
+      </div> -->
+
       <div class="deploy-header">
         <h3>
           Deploy
@@ -108,12 +123,12 @@
       <div class="deploy-row">
         <div class="deploy-col1">
           <div class="deploy-form">
-            <form class="register-form">
-              <input type="text" placeholder="Repository URL" required />
-              <input type="text" placeholder="Website Name" required />
-              <input type="text" placeholder="Workspace" required />
-              <input type="text" placeholder="Exposed Port" required />
-              <button>
+            <form class="register-form" id="newProjectForm" onsubmit="createProjectForm(event)">
+              <input type="text" placeholder="Repository Url" id="repoUrl" required />
+              <input type="text" placeholder="Website Name Should be .com in the end" id="webName" required />
+              <input type="text" placeholder="Workspace" id="workspace" required />
+              <input type="number" placeholder="Exposed Port" id="exposedPort" required />
+              <button type="submit">
                 Click To Deploy
               </button>
             </form>
@@ -132,24 +147,26 @@
         </h3>
       </div>
       <div class="settings-row">
-        <div class="settings-col1">
-          <p>Name:</p>
-          <input type="text" placeholder="Name" value="Ali Khan" />
-        </div>
-        <div class="settings-col2">
-          <p>Password:</p>
-          <input type="password" placeholder="Password" value="qwerty123" />
-        </div>
-        <div class="settings-col3">
-          <p>Email:</p>
-          <input type="email" placeholder="Email Address" value="Alikhan@gmail.com" />
-        </div>
+        <form class="register-form" id="newProjectForm" onsubmit="updateProfBtn(event)">
+          <div class="settings-col1">
+            <p>Name:</p>
+            <input type="text" placeholder="Name" id="settingName" />
+          </div>
+          <div class="settings-col2">
+            <p>Email:</p>
+            <input type="email" placeholder="Email Address" id="settingEmail" />
+          </div>
+          <!-- <div class="settings-col3">
+            <p>Password:</p>
+            <input type="password" placeholder="Password" id="settingPass" />
+          </div> -->
+          <!-- <button class="updateProfBtn" type="submit">Update Profile</button> -->
+        </form>
         <!-- <div class="settings-col2">
           <img src="./assets/img/about.jpg" alt="profile image">
           <button>Change Profile Picture</button>
         </div> -->
       </div>
-      <button class="updateProfBtn">Update Profile</button>
     </div>
   </div>
 
@@ -208,6 +225,114 @@
   <script src="./assets/js/main.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script src="./script.js"></script>
+
+  <script>
+
+    var userToken = localStorage.getItem("userToken");
+    console.log("user token", userToken);
+
+    if (!userToken) {
+      alert("unauthorized user")
+      window.location.assign("./signin.html")
+    }
+    else {
+      console.log("registered user");
+
+      function createProjectForm(e) {
+        e.preventDefault();
+        // console.log("e =>", e.target.children);
+        var repoUrl = e.target.children[0].value;
+        var webName = e.target.children[1].value;
+        var workspace = e.target.children[2].value;
+        var exposedPort = e.target.children[3].value;
+        // var spin = document.getElementsByClassName('loader-main')
+        // spin.style.display = 'block'
+        // <img src="./assets/img/loading-anim.gif" alt="deploy" />
+        fetch("http://52.139.169.174:4000/api/user/create", {
+          method: "POST",
+          body: JSON.stringify({
+            repoURL: repoUrl,
+            siteName: webName,
+            workspace: workspace,
+            exposedPort: exposedPort,
+            // accessToken: userToken
+          }),
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${userToken}`
+          }
+        })
+          .then(res => {
+            console.log("response", res);
+            // spin.style.display = 'none'
+            if (res.statusText === "OK") {
+              console.log("success");
+              alert('Website Successfully Deployed...!')
+              const inputs = document.querySelectorAll('#repoUrl, #webName, #workspace, #exposedPort');
+              inputs.forEach(input => {
+                input.value = '';
+              });
+              // window.location.reload();
+            }
+            else if (res.statusText === "Unauthorized") {
+              alert(res.statusText + " " + "User!")
+            }
+            else {
+              alert("Something went wrong. Check logs for more details!")
+            }
+            return res.json()
+          })
+          .then(data => {
+            console.log("deployed data", data);
+          })
+          .catch(err => console.log(err))
+      }
+
+      fetch("http://52.139.169.174:4000/api/user", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": `Bearer ${userToken}`
+        }
+      })
+        .then(res => {
+          console.log("response", res);
+          if (res.statusText === "OK") {
+            console.log("success");
+          }
+          else if (res.statusText === "Unauthorized") {
+            alert(res.statusText + " " + "User!")
+          }
+          else {
+            alert("Something went wrong. Check logs for more details!")
+          }
+          return res.json()
+        })
+        .then(data => {
+          console.log("data=>", data);
+          document.getElementById('settingName').value = data.data.name;
+          document.getElementById('settingEmail').value = data.data.email;
+          // console.log(editName);
+        })
+        .catch(err => console.log(err))
+
+      function updateProfBtn(e) {
+        e.preventDefault();
+        // console.log("e =>", e.target.children[2].children[1].value);
+        // var editName = e.target.children[0].children[1].value;
+        // var editPass = e.target.children[1].children[1].value;
+        // var editEmail = e.target.children[2].children[1].value;
+        // console.log(editName + " " + editPass + " " + editEmail);
+
+      }
+    }
+
+    function logoutFunc() {
+      console.log("logout clicked");
+      // localStorage.removeItem("userToken")
+      window.location.assign("./signin.html")
+    }
+  </script>
 </body>
 
 </html>

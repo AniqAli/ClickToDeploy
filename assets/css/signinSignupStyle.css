@@ -6,6 +6,21 @@
   margin: auto;
 }
 
+.signupBtn {
+  background-color: #485664;
+  border: none;
+  color: #fff;
+  padding: 16px 0px;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.signupBtn:hover {
+  background-color: #485664;
+}
+
 .form {
   position: relative;
   z-index: 1;
@@ -177,11 +192,12 @@ header {
   float: right;
   margin-top: -30px;
   margin-right: 40px;
-  border-radius: 2px;
+  border-radius: 4px;
   font-size: 14px;
   font-weight: 600;
   color: #fff;
   transition: 0.5s;
+  cursor: pointer;
   transition-property: background;
 }
 
@@ -277,6 +293,7 @@ label #sidebar_btn:hover {
 .dashboard-body {
   padding-top: 70px;
   padding-left: 270px;
+  position: relative;
 }
 
 .dash-cont {
@@ -381,6 +398,57 @@ label #sidebar_btn:hover {
 .settings-col2 button:hover {
   background-color: #0d6dfdc5;
 }
+
+.loader-main {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  display: none;
+}
+
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
+.spin::before {
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #1c87c9;
+  border-radius: 50%;
+  content: "";
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}
+
+/* .loading-main {
+  position: absolute;
+  background-color: #d8d8d8;
+}
+
+.loading-box {
+  max-width: 150px;
+  text-align: center;
+  left: 50%;
+}
+
+.loading-box img {
+}
+
+.loading-box h5 {
+  margin: 0;
+} */
 
 .settings-row {
   display: grid;
